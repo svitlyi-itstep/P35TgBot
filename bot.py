@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 # pip install aiogram
 from aiogram import Bot, Dispatcher      # [1]
 from aiogram.types import Message        # [1]
+from aiogram.filters import Command
 
 dp = Dispatcher()                        # [2]
 
@@ -16,6 +17,10 @@ async def any_message(                   # [4]
     print(f"{message.from_user.full_name}: {message.text}")
     await message.answer("Hello world!") # [6]
 
+
+@dp.message(Command("start"))
+async def cmd_start(message: Message):
+    await message.answer("Let`s talk!")
 
 async def main():
     load_dotenv()
