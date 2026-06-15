@@ -10,6 +10,8 @@ from aiogram.filters import Command
 # pip install google-genai
 from google import genai
 
+import requests
+
 dp = Dispatcher()                        # [2]
 client = None
 bot = None
@@ -38,6 +40,16 @@ def auth_gemini_api():
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     await message.answer("Let`s talk!")
+
+# Обробник команди /meowfact
+@dp.message(Command("meowfact"))
+async def cmd_meowfact(message: Message):
+    response = requests.get("https://meowfacts.herokuapp.com/")
+    if response.ok:
+        fact = response.json()['data'][0]
+        await message.answer(fact)
+    else:
+        await message.answer("Something wrong!")
 
 # Обробних всіх інших повідомлень
 @dp.message()                            # [3]
