@@ -44,10 +44,14 @@ async def cmd_start(message: Message):
 # Обробник команди /meowfact
 @dp.message(Command("meowfact"))
 async def cmd_meowfact(message: Message):
-    response = requests.get("https://meowfacts.herokuapp.com/")
+    args = message.text.split()[1:]
+    count = 1
+    if len(args) > 0:
+        count = int(args[0])
+    response = requests.get("https://meowfacts.herokuapp.com/", {"count": count})
     if response.ok:
-        fact = response.json()['data'][0]
-        await message.answer(fact)
+        facts = response.json()['data']
+        await message.answer("\n\n".join(facts))
     else:
         await message.answer("Something wrong!")
 
