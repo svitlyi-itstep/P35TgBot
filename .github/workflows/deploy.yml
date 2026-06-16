@@ -17,7 +17,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ec2-user/P35TgBot
-            git pull origin main
-            source .venv/bit/activate
-            pip install -r requirements.txt
-            sudo systemctl restart tgbot
+            git pull origin main
+            source .venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart tgbot
