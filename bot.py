@@ -37,7 +37,7 @@ def auth_gemini_api():
 # Обробник команди /start
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
-    await message.answer("Let`s talk!")
+    await message.answer("Let`s talk, dude!")
 
 # Обробних всіх інших повідомлень
 @dp.message()                            # [3]
