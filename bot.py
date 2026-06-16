@@ -11,6 +11,7 @@ from aiogram.filters import Command
 from google import genai
 
 import requests
+import random
 
 dp = Dispatcher()                        # [2]
 client = None
@@ -40,6 +41,11 @@ def auth_gemini_api():
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     await message.answer("Let`s talk, dude!")
+
+# Обробник команди /roll
+@dp.message(Command("roll"))
+async def cmd_roll(message: Message):
+    await message.answer(f"Ви викинули {random.randint(1, 100)}")
 
 # Обробник команди /meowfact
 @dp.message(Command("meowfact"))
