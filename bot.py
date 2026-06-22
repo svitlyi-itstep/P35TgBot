@@ -83,6 +83,9 @@ async def any_message(                   # [4]
             print(f"{type(err)}: {err}")
             await message.answer("Щось пішло не так")
         else:
+            response_text = str(response.text)
+                .removeprefix("```json")
+                .removesuffix("```")
             await message.answer(str(response.text)) # [6]
 
 
