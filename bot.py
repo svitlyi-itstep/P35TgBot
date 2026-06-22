@@ -13,6 +13,8 @@ from google import genai
 import requests
 import random
 
+from PromptBuilder import PromptBuilder
+
 dp = Dispatcher()                        # [2]
 client = None
 bot = None
@@ -71,9 +73,11 @@ async def any_message(                   # [4]
         await message.answer("Hello world!")
     else:
         try:
+            prompt = PromptBuilder.simplePrompt(message.text)
+            await message.answer(f"Запит: {prompt}")
             response = client.models.generate_content(
                 model="gemini-3.5-flash",
-                contents=message.text,
+                contents=prompt,
             )
         except Exception as err:
             print(f"{type(err)}: {err}")
