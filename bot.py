@@ -21,11 +21,14 @@ dp = Dispatcher()                        # [2]
 client = None
 bot = None
 
-try:
-    test_db = DataBase("TestTable")
-except Exception as err:
-    print(f"{type(err)}: {err}")
+test_db = None
 
+
+def auth_db():
+    try:
+        return DataBase("TestTable")
+    except Exception as err:
+        print(f"{type(err)}: {err}")
 
 # Підключення до telegram-бота
 def auth_telegram():
@@ -103,11 +106,12 @@ async def any_message(                   # [4]
             await message.answer(response_text) # [6]
 
 async def main():
-    global bot, client
+    global bot, client, test_db
 
     load_dotenv()
     bot = auth_telegram()
     client = auth_gemini_api()
+    test_db = auth_db()
 
     print("Starting bot...")
     try:
