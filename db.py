@@ -14,7 +14,7 @@ class DataBase:
         return str(self.table)
 
     def put_item(self, item: dict):
-        item['created_at'] = datetime.datetime.now()
+        item['created_at'] = str(datetime.datetime.now())
         self.table.put_item(
             Item=item
         )
