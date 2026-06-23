@@ -1,4 +1,5 @@
 import asyncio                           # [1]
+import types
 from os import getenv                    # [1]
 from dotenv import load_dotenv
 
@@ -20,7 +21,11 @@ dp = Dispatcher()                        # [2]
 client = None
 bot = None
 
-test_db = DataBase("TestTable")
+try:
+    test_db = DataBase("TestTable")
+except Exception as err:
+    print(f"{type(err)}: {err}")
+
 
 # Підключення до telegram-бота
 def auth_telegram():
@@ -50,7 +55,10 @@ async def cmd_start(message: Message):
 # Обробник команди /db
 @dp.message(Command("db"))
 async def cmd_start(message: Message):
-    await message.answer(str(test_db))
+    try:
+        await message.answer(str(test_db))
+    except Exception as err:
+        await message.answer(f"{type(err)}: {err}")
 
 # Обробник команди /roll
 @dp.message(Command("roll"))
@@ -93,7 +101,6 @@ async def any_message(                   # [4]
         else:
             response_text = str(response.text)
             await message.answer(response_text) # [6]
-
 
 async def main():
     global bot, client
