@@ -50,7 +50,7 @@ async def cmd_start(message: Message):
 # Обробник команди /db
 @dp.message(Command("db"))
 async def cmd_start(message: Message):
-    await message.answer(test_db)
+    await message.answer(str(test_db))
 
 # Обробник команди /roll
 @dp.message(Command("roll"))
