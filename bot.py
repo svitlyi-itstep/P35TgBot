@@ -1,4 +1,5 @@
 import asyncio                           # [1]
+import json
 import types
 from os import getenv                    # [1]
 from dotenv import load_dotenv
@@ -60,8 +61,17 @@ async def cmd_start(message: Message):
 
 # Обробник команди /db
 @dp.message(Command("db"))
-async def cmd_start(message: Message):
+async def cmd_db(message: Message):
     try:
+        await message.answer(str(test_db))
+    except Exception as err:
+        await message.answer(f"{type(err)}: {err}")
+
+@dp.message(Command("db_add"))
+async def cmd_db_add(message: Message):
+    arg = message.text.removeprefix("/db_add ")
+    try:
+        test_db.put_item(json.loads(arg))
         await message.answer(str(test_db))
     except Exception as err:
         await message.answer(f"{type(err)}: {err}")
