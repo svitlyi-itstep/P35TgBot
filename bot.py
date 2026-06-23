@@ -26,7 +26,10 @@ test_db = None
 
 def auth_db():
     try:
-        return DataBase("TestTable")
+        return DataBase(
+            table_name="TestTable",
+            region="us-east-1"
+        )
     except Exception as err:
         print(f"{type(err)}: {err}")
 
