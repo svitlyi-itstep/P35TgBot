@@ -14,10 +14,13 @@ import requests
 import random
 
 from PromptBuilder import PromptBuilder
+from db import DataBase
 
 dp = Dispatcher()                        # [2]
 client = None
 bot = None
+
+test_db = DataBase("TestTable")
 
 # Підключення до telegram-бота
 def auth_telegram():
@@ -43,6 +46,11 @@ def auth_gemini_api():
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     await message.answer("Let`s talk, dude!")
+
+# Обробник команди /db
+@dp.message(Command("db"))
+async def cmd_start(message: Message):
+    await message.answer(test_db)
 
 # Обробник команди /roll
 @dp.message(Command("roll"))
@@ -84,9 +92,7 @@ async def any_message(                   # [4]
             await message.answer("Щось пішло не так")
         else:
             response_text = str(response.text)
-                .removeprefix("```json")
-                .removesuffix("```")
-            await message.answer(str(response.text)) # [6]
+            await message.answer(response_text) # [6]
 
 
 async def main():
