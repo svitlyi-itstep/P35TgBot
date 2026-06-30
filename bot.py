@@ -46,7 +46,8 @@ def auth_telegram():
         secret = json.loads(response['SecretString'])
 
         token = secret["BOT_TOKEN"]
-    except:
+    except Exception as err:
+        print(f"{type(err)}: {err}")
         print("Failed to load bot token from aws.")
         token = None
     if not token:
