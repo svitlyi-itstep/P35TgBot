@@ -17,6 +17,7 @@ import random
 
 from PromptBuilder import PromptBuilder
 from db import DataBase
+import boto3
 
 dp = Dispatcher()                        # [2]
 client = None
@@ -36,7 +37,20 @@ def auth_db():
 
 # Підключення до telegram-бота
 def auth_telegram():
-    token = getenv("BOT_TOKEN")  # [7]
+    try:
+        aws_client = boto3.client(
+            service_name="secretsmanager",
+            region_name="us-east-1"
+        )
+        response = aws_client.get_secret_value(SecredId="tgbot/token")
+        secret = json.loads(response['SecretString'])
+
+        token = secret["BOT_TOKEN"]
+    except:
+        print("Failed to load bot token from aws.")
+        token = None
+    if not token:
+        token = getenv("BOT_TOKEN")  # [7]
     if not token:  # [7]
         error = "No token provided"  # [7]
         raise ValueError(error)  # [7]
