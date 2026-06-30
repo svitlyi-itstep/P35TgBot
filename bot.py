@@ -42,7 +42,7 @@ def auth_telegram():
             service_name="secretsmanager",
             region_name="us-east-1"
         )
-        response = aws_client.get_secret_value(SecredId="tgbot/token")
+        response = aws_client.get_secret_value(SecretId="tgbot/token")
         secret = json.loads(response['SecretString'])
 
         token = secret["BOT_TOKEN"]
