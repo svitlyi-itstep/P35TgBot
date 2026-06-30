@@ -18,3 +18,11 @@ class DataBase:
         self.table.put_item(
             Item=item
         )
+
+
+    '''
+    
+        Створити додаток на Python, який підключається
+        до DynamoBD у AWS та може додавати об'єкти у таблицю.
+    
+    '''
